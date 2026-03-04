@@ -8,6 +8,8 @@ public abstract class Ordination {
     private LocalDate slutDen;
 
     // TODO Link til Laegemiddel
+    private Laegemiddel laegemiddel;
+
     // TODO constructor (med specifikation)
 
     public LocalDate getStartDen() {
