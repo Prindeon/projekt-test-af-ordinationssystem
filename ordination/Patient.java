@@ -37,7 +37,7 @@ public class Patient {
         this.vaegt = vaegt;
     }
 
-    //TODO: Metoder (med specifikation) til at vedligeholde link til Ordination
+    //TODO: Metoder (med specifikation) til at vedligeholde link til Ordination lkjlkj
     public void addOrdination(Ordination ordination) {
         ordinationer.add(ordination);
         ordination.setPatient(this);
