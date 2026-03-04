@@ -102,7 +102,7 @@ public class OrdinationDetailsPane extends GridPane {
             lblError.setText(e.getMessage());
             return;
         }
-        txtAnvendt.setText(pn.getAntalGangeGivet() + " gange");
+        txtAnvendt.setText(pn.getDageGivet() + " gange");
         txtDosis.setText(pn.getAntalEnheder() + "");
 
         txtDoegndosis.setText(pn.doegnDosis() + " "
@@ -160,7 +160,7 @@ public class OrdinationDetailsPane extends GridPane {
         this.pn = pn;
         this.add(pnPane, 0, 6, 2, 1);
         txtDosis.setText(pn.getAntalEnheder() + "");
-        txtAnvendt.setText(pn.getAntalGangeGivet() + " antal");
+        txtAnvendt.setText(pn.getDageGivet() + " antal");
     }
 
 }

@@ -14,9 +14,21 @@ public abstract class Ordination {
 
     // TODO constructor (med specifikation)
     public Ordination(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel) {
-        if (slutDen.isBefore(startDen)) {
-            throw new IllegalArgumentException("Startdato må ikke være før slutdato");
+        if (startDen == null || slutDen == null) {
+            throw new IllegalArgumentException("Start og slutdato må ikke være null");
         }
+
+        if (laegemiddel == null) {
+            throw new IllegalArgumentException("Lægemiddel må ikke være null");
+        }
+
+        if (slutDen.isBefore(startDen)) {
+            throw new IllegalArgumentException("Slutdato må ikke være før startdato");
+        }
+
+        this.startDen = startDen;
+        this.slutDen = slutDen;
+        this.laegemiddel = laegemiddel;
     }
 
     public LocalDate getStartDen() {
