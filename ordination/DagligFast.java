@@ -1,19 +1,45 @@
 package ordination;
 
-import java.util.ArrayList;
 
-public class DagligFast {
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+public class DagligFast extends Ordination {
+
+    // 0 = morgen, 1 = middag, 2 = aften, 3 = nat
     private Dosis[] doser = new Dosis[4];
 
+    public DagligFast(LocalDate startDate, LocalDate endDate, Laegemiddel laegemiddel) {
+        super(startDate, endDate, laegemiddel);
+    }
     public Dosis[] getDoser() {
         return doser;
     }
 
-    public void setDosis(Dosis[] dosis) {
-        this.doser = dosis;
+    public void setDosis(int index, Dosis dosis) {
+        doser[index] = dosis;
     }
 
-    public Dosis getDosis(int index){
+    public Dosis getDosis(int index) {
         return doser[index];
     }
+
+    @Override
+    public double doegnDosis() {
+        return 0;
+    }
+
+    @Override
+    public double samletDosis() {
+        return 0;
+    }
+
+    @Override
+    public String getType() {
+        return "DagligFast";
+    }
+
+
+
+
 }
