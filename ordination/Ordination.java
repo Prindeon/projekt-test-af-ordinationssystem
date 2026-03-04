@@ -27,6 +27,10 @@ public abstract class Ordination {
         return slutDen;
     }
 
+    public Laegemiddel getLaegemiddel() {
+        return laegemiddel;
+    }
+
     /**
      * Antal hele dage mellem startdato og slutdato. Begge dage inklusive.
      * @return antal dage ordinationen gælder for
