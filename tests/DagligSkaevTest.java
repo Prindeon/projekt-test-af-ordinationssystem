@@ -22,11 +22,8 @@ public class DagligSkaevTest {
         ds.opretDosis(LocalTime.of(8, 0), 2.0);
 
 
-
-
         // Assert
         assertEquals(1, ds.getDoser().size());
-
 
     }
 

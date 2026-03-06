@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +19,7 @@ public class ControllerTests {
     private Laegemiddel laegemiddel;
     private PN pn;
     private DagligFast fast;
+    private DagligSkaev skaev;
     private IllegalArgumentException exception;
 
     @BeforeEach
@@ -36,6 +38,27 @@ public class ControllerTests {
                 patient,
                 laegemiddel,
                 4
+        );
+
+        LocalTime[] klokkeSlet = {
+                LocalTime.of(8, 0),
+                LocalTime.of(12, 0),
+                LocalTime.of(18, 0)
+        };
+
+        double[] antalEnheder = {
+                1.0,  // morgen
+                2.0,  // middag
+                1.5   // aften
+        };
+
+        skaev = Controller.opretDagligSkaevOrdination(
+                LocalDate.of(2026,1,01),
+                LocalDate.of(2026,10,01),
+                patient,
+                laegemiddel,
+                klokkeSlet,
+                antalEnheder
         );
 
         fast = Controller.opretDagligFastOrdination(
@@ -299,6 +322,150 @@ public class ControllerTests {
 
         assertTrue(exception.getMessage().contains("Antal må ikke være negativ"));
     }
+
+    // opretDagligSkaevOrdination
+    // Gyldige data
+    @Test
+    public void opretDagligSkaev_gyldigInput_returnererOrdination() {
+        assertNotNull(skaev);
+        assertTrue(patient.getOrdinationer().contains(skaev));
+    }
+
+    @Test
+    public void opretDagligSkaev_gyldigInput_korrektDoegnDosis() {
+        assertEquals(4.5, skaev.doegnDosis());
+    }
+
+    // Ugyldige data
+    @Test
+    public void opretDagligSkaev_startDatoEfterSlutDato_kasterException() {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            Controller.opretDagligSkaevOrdination(
+                    LocalDate.of(2026, 11, 1),
+                    LocalDate.of(2026, 10, 1),
+                    patient,
+                    laegemiddel,
+                    new LocalTime[]{LocalTime.of(8, 0)},
+                    new double[]{1.0}
+            );
+        });
+
+        assertTrue(exception.getMessage().contains("Slutdato kan ikke være før startdato"));
+    }
+
+    @Test
+    public void opretDagligSkaev_nullPatient_kasterException() {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            Controller.opretDagligSkaevOrdination(
+                    LocalDate.of(2026, 1, 1),
+                    LocalDate.of(2026, 10, 1),
+                    null,
+                    laegemiddel,
+                    new LocalTime[]{LocalTime.of(8, 0)},
+                    new double[]{1.0}
+            );
+        });
+
+        assertTrue(exception.getMessage().contains("Patient eller lægemiddel må ikke være null"));
+    }
+
+    @Test
+    public void opretDagligSkaev_nullLægemiddel_kasterException() {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            Controller.opretDagligSkaevOrdination(
+                    LocalDate.of(2026, 1, 1),
+                    LocalDate.of(2026, 10, 1),
+                    patient,
+                    null,
+                    new LocalTime[]{LocalTime.of(8, 0)},
+                    new double[]{1.0}
+            );
+        });
+
+        assertTrue(exception.getMessage().contains("Patient eller lægemiddel må ikke være null"));
+    }
+
+    @Test
+    public void opretDagligSkaev_nullKlokkeSlet_kasterException() {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            Controller.opretDagligSkaevOrdination(
+                    LocalDate.of(2026, 1, 1),
+                    LocalDate.of(2026, 10, 1),
+                    patient,
+                    laegemiddel,
+                    null,
+                    new double[]{1.0}
+            );
+        });
+
+        assertTrue(exception.getMessage().contains("Klokkeslet og antal må ikke være null"));
+    }
+
+    @Test
+    public void opretDagligSkaev_nullAntalEnheder_kasterException() {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            Controller.opretDagligSkaevOrdination(
+                    LocalDate.of(2026, 1, 1),
+                    LocalDate.of(2026, 10, 1),
+                    patient,
+                    laegemiddel,
+                    new LocalTime[]{LocalTime.of(8, 0)},
+                    null
+            );
+        });
+
+        assertTrue(exception.getMessage().contains("Klokkeslet og antal må ikke være null"));
+    }
+
+    @Test
+    public void opretDagligSkaev_forskelligArrayLængde_kasterException() {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            Controller.opretDagligSkaevOrdination(
+                    LocalDate.of(2026, 1, 1),
+                    LocalDate.of(2026, 10, 1),
+                    patient,
+                    laegemiddel,
+                    new LocalTime[]{LocalTime.of(8, 0), LocalTime.of(12, 0)},
+                    new double[]{1.0}
+            );
+        });
+
+        assertTrue(exception.getMessage().contains("Alle enheder skal have 1 klokkeslet"));
+    }
+
+    @Test
+    public void opretDagligSkaev_nulAntalEnheder_kasterException() {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            Controller.opretDagligSkaevOrdination(
+                    LocalDate.of(2026, 1, 1),
+                    LocalDate.of(2026, 10, 1),
+                    patient,
+                    laegemiddel,
+                    new LocalTime[]{LocalTime.of(8, 0)},
+                    new double[]{0}
+            );
+        });
+
+        assertTrue(exception.getMessage().contains("Alle enheder skal være større end 0"));
+    }
+
+    @Test
+    public void opretDagligSkaev_negativAntalEnheder_kasterException() {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            Controller.opretDagligSkaevOrdination(
+                    LocalDate.of(2026, 1, 1),
+                    LocalDate.of(2026, 10, 1),
+                    patient,
+                    laegemiddel,
+                    new LocalTime[]{LocalTime.of(8, 0)},
+                    new double[]{-1.0}
+            );
+        });
+
+        assertTrue(exception.getMessage().contains("Alle enheder skal være større end 0"));
+    }
+
+
 
 
 
