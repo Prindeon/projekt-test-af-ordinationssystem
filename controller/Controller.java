@@ -37,7 +37,6 @@ public abstract class Controller {
 
 		PN pn = new PN(startDen, slutDen, laegemiddel, antal);
 
-		pn.setPatient(patient);
 		patient.addOrdination(pn);
 		return pn;
 	}
@@ -70,7 +69,6 @@ public abstract class Controller {
 		dagligFast.setDosis(2, new Dosis(LocalTime.of(18, 0), aftenAntal));
 		dagligFast.setDosis(3, new Dosis(LocalTime.of(23, 0), natAntal));
 
-		dagligFast.setPatient(patient);
 		patient.addOrdination(dagligFast);
 		return dagligFast;
 	}
@@ -111,7 +109,6 @@ public abstract class Controller {
 			dagligSkæv.opretDosis(klokkeSlet[i], antalEnheder[i]);
 		}
 
-		dagligSkæv.setPatient(patient);
 		patient.addOrdination(dagligSkæv);
 		return dagligSkæv;
 	}

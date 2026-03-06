@@ -87,4 +87,8 @@ public class PN extends Ordination {
     public double getAntalEnheder() {
         return antalEnheder;
     }
+
+    public void setAntalEnheder(double antalEnheder) {
+        this.antalEnheder = antalEnheder;
+    }
 }

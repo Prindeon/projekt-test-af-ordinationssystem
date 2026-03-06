@@ -40,12 +40,10 @@ public class Patient {
     //TODO: Metoder (med specifikation) til at vedligeholde link til Ordination
     public void addOrdination(Ordination ordination) {
         ordinationer.add(ordination);
-        ordination.setPatient(this);
     }
 
     public void removeOrdination(Ordination ordination) {
         ordinationer.remove(ordination);
-        ordination.setPatient(null);
     }
 
     public ArrayList<Ordination> getOrdinationer() {

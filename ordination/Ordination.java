@@ -9,8 +9,6 @@ public abstract class Ordination {
 
     private Laegemiddel laegemiddel;
 
-    private Patient patient;
-
     public Ordination(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel) {
         if (startDen == null || slutDen == null) {
             throw new IllegalArgumentException("Start og slutdato må ikke være null");
@@ -73,12 +71,15 @@ public abstract class Ordination {
     public abstract String getType();
 
 
-    // Patienter
-    public Patient getPatient() {
-        return patient;
+    public void setStartDen(LocalDate startDen) {
+        this.startDen = startDen;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setSlutDen(LocalDate slutDen) {
+        this.slutDen = slutDen;
+    }
+
+    public void setLaegemiddel(Laegemiddel laegemiddel) {
+        this.laegemiddel = laegemiddel;
     }
 }
