@@ -36,7 +36,6 @@ public abstract class Controller {
 		}
 
 		PN pn = new PN(startDen, slutDen, laegemiddel, antal);
-
 		patient.addOrdination(pn);
 		return pn;
 	}
@@ -89,7 +88,7 @@ public abstract class Controller {
 		}
 
 		if (patient == null || laegemiddel == null) {
-			throw new IllegalArgumentException("Patient og lægemiddel må ikke være null");
+			throw new IllegalArgumentException("Patient eller lægemiddel må ikke være null");
 		}
 
 		if (klokkeSlet == null || antalEnheder == null) {
