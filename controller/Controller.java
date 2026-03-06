@@ -62,6 +62,10 @@ public abstract class Controller {
 			throw new IllegalArgumentException("Antal må ikke være negativ");
 		}
 
+		if (startDen == null || slutDen == null) {
+			throw new IllegalArgumentException("Start- og slutdato må ikke være null");
+		}
+
 		DagligFast dagligFast = new DagligFast(startDen, slutDen, laegemiddel);
 		dagligFast.setDosis(0, new Dosis(LocalTime.of(8, 0), morgenAntal));
 		dagligFast.setDosis(1, new Dosis(LocalTime.of(12, 0), middagAntal));

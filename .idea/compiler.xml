@@ -4,4 +4,9 @@
     <option name="PARALLEL_COMPILATION_OPTION" value="Disabled" />
     <addNotNullAssertions enabled="false" />
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="projekt-test-af-ordinationssystem" options="--add-exports jdk.javadoc/jdk.javadoc.internal.doclets.formats.html.markup=ALL-UNNAMED" />
+    </option>
+  </component>
 </project>
